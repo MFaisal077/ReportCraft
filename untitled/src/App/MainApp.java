@@ -23,36 +23,36 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        // 🔹 App Icon
-        Image icon = new Image("resources/ReportCraft Icon.png");
+
+        Image icon = new Image("resources/monitor.png"); // Application Icon
         stage.getIcons().add(icon);
 
-        // 🔹 Title Label
+
         Label titleLabel = new Label("Report Craft");
         titleLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
         HBox titleBox = new HBox(titleLabel);
         titleBox.setAlignment(Pos.CENTER);
         titleBox.setPadding(new Insets(10));
 
-        // 🔹 SQL Input Field
-        TextField queryInput = new TextField("Enter your queries here");
+
+        TextField queryInput = new TextField(""); // this is where you input queries
         queryInput.setPrefWidth(300);
 
         // 🔹 Buttons
-        Button runButton = new Button("Run");
-        Button exportButton = new Button("Export");
-        Button addSQLButton = new Button("Add SQL");
+        Button runButton = new Button("Run"); // For running the query
+        Button exportButton = new Button("Export"); // Exporting the graphs
+        Button addSQLButton = new Button("Add SQL");// This allows you to import the database in the SQL format
 
-        // 🔹 Labels for user feedback
-        Label confirmationLabel = new Label();
+
+        Label confirmationLabel = new Label(); // confirms if the sql file has been successfully uploaded
         Label statusLabel = new Label();
 
-        // 🔹 File Chooser setup
+        //Backend for the "ADD SQL" button.
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open SQL File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL Files", "*.sql"));
 
-        // 🔹 Add SQL Button functionality
+
         addSQLButton.setOnAction(e -> {
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
@@ -72,21 +72,21 @@ public class MainApp extends Application {
             }
         });
 
-        // 🔹 Action Button Row
-        HBox actionBox = new HBox(10, runButton, exportButton, addSQLButton, queryInput);
+
+        HBox actionBox = new HBox(10, queryInput,runButton, exportButton, addSQLButton);
         actionBox.setPadding(new Insets(10));
         actionBox.setAlignment(Pos.CENTER_LEFT);
 
-        // 🔹 Status Bar (Bottom)
+
         HBox statusBar = new HBox(10, confirmationLabel, statusLabel);
         statusBar.setPadding(new Insets(10));
         statusBar.setAlignment(Pos.CENTER_LEFT);
 
-        // 🔹 Main Layout
+
         VBox layout = new VBox(10, titleBox, actionBox, statusBar);
         layout.setPadding(new Insets(15));
 
-        // 🔹 Scene & Stage setup
+
         Scene scene = new Scene(layout, 800, 600);
         stage.setTitle("Report Craft");
         stage.setScene(scene);

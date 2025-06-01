@@ -11,10 +11,10 @@ public class jdbc {
     public static Connection connect() {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ Connected to MySQL database");
+            System.out.println("Connected to MySQL database");
             return conn;
         } catch (SQLException e) {
-            System.out.println("❌ Database connection failed: " + e.getMessage());
+            System.out.println("Database connection failed: " + e.getMessage());
             return null;
         }
     }
@@ -29,7 +29,7 @@ public class jdbc {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Query error: " + e.getMessage());
+            System.out.println("Query error: " + e.getMessage());
         }
     }
 
