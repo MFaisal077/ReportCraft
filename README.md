@@ -1,8 +1,8 @@
-# ReportCract 🧠📊
+# ReportCraft 📊
 
-**ReportCraft** is a JavaFX desktop application that lets users write SQL queries, execute them on a local SQLite database, and view the results in a table or chart format.
+**ReportCraft** is a JavaFX desktop application that enables users to write SQL queries, execute them on a local MySQL database, and view the results in a table or chart format.
 
-This project was built as a learning-focused tool to explore SQL, JavaFX UI design, and result visualisation.
+This project was built as a learning-focused tool to explore SQL, JavaFX UI design, result visualisation, and Gluon's Scene Builder.
 
 ---
 
@@ -20,7 +20,7 @@ This project was built as a learning-focused tool to explore SQL, JavaFX UI desi
 
 - Java 17
 - JavaFX
-- SQLite (via JDBC)
+- MYSQL (via JDBC)
 - JavaFX Charts
 - IntelliJ IDEA
 
