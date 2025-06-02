@@ -6,9 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-public class Login extends Application {
+public class LoginController extends Application {
     public static void main(String[] args) {
         launch(args);
     }
