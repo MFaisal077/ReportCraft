@@ -33,11 +33,11 @@ public class SignUpController {
 
         }
         try (Connection conn = Database.jdbc.connect()) {
-            String sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO user_details (email, full_name, password_hash) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, name);
-            stmt.setString(2, password);
-            stmt.setString(3, email);
+            stmt.setString(1, email);
+            stmt.setString(2, name);
+            stmt.setString(3,password);
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
@@ -59,9 +59,15 @@ public class SignUpController {
 
     @FXML
     private void switchtologin(ActionEvent event) {
-        // Example action: just print
-        System.out.println("Switch to login clicked");
-        // Later: you can load login.fxml here
+        try {
+            MainApp.showLoginScreen();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Unable to switch screens");
+            alert.show();
+            e.printStackTrace();
+        }
     }
 
         private void clearFields() {

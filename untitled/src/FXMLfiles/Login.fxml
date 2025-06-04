@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.49282920469361147" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.LoginController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="281.0" style="-fx-background-color: #1abc9c;">
+         <children>
+            <ImageView fitHeight="88.0" fitWidth="115.0" layoutX="130.0" layoutY="225.0">
+               <image>
+                  <Image url="@../resources/monitor.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="64.0" layoutY="313.0" prefHeight="66.0" prefWidth="273.0" text="Report Craft">
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Label>
+            <Label layoutX="64.0" layoutY="513.0" text="© 2025 Report Craft by Mohammad Faisal" />
+         </children>
+      </AnchorPane>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <HBox layoutX="117.0" layoutY="161.0" prefHeight="18.0" prefWidth="95.0" />
+            <Label layoutX="123.0" layoutY="58.0" text="LOGIN">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="47.0" layoutY="228.0" text="Email" />
+            <Label layoutX="35.0" layoutY="268.0" prefHeight="18.0" prefWidth="106.0" text="Password" />
+            <TextField fx:id="PasswordField" alignment="CENTER" layoutX="104.0" layoutY="264.0" prefHeight="25.0" prefWidth="178.0" promptText="Password" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="130.0" text="Login" />
+            <Label layoutX="118.0" layoutY="414.0" text="I dont have an account" />
+            <Button layoutX="252.0" layoutY="410.0" mnemonicParsing="false" onAction="#switchtoSignUp" text="Sign Up" />
+            <TextField fx:id="emailField" alignment="CENTER" layoutX="104.0" layoutY="224.0" minWidth="-Infinity" prefHeight="18.0" prefWidth="178.0" promptText="Enter Email" />
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

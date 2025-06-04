@@ -24,32 +24,28 @@
                   <Font size="45.0" />
                </font>
             </Label>
-            <Label layoutX="64.0" layoutY="513.0" text="© 2025 ReportCraft by Mohammad Faisal" />
+            <Label layoutX="64.0" layoutY="513.0" text="© 2025 Report Craft by Mohammad Faisal" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <HBox layoutX="117.0" layoutY="161.0" prefHeight="18.0" prefWidth="95.0">
                <children>
-                  <TextField fx:id="emailField" alignment="CENTER" prefHeight="26.0" prefWidth="126.0" promptText="Enter Email">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
+                  <TextField fx:id="emailField" alignment="CENTER" minWidth="-Infinity" prefHeight="31.0" prefWidth="178.0" promptText="Enter Email" />
                </children>
             </HBox>
-            <Label layoutX="111.0" layoutY="59.0" text="SIGN UP">
+            <Label layoutX="140.0" layoutY="58.0" text="SIGN UP">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
             <Label layoutX="54.0" layoutY="166.0" text="Email" />
             <Label layoutX="41.0" layoutY="217.0" text="Full Name" />
-            <TextField fx:id="nameField" layoutX="118.0" layoutY="214.0" prefHeight="30.0" prefWidth="95.0" promptText="Full Name" />
-            <Label layoutX="34.0" layoutY="276.0" prefHeight="18.0" prefWidth="106.0" text="Password" />
-            <TextField fx:id="PasswordField" layoutX="110.0" layoutY="273.0" prefHeight="30.0" prefWidth="106.0" />
-            <Button layoutX="38.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="30.0" prefWidth="130.0" text="Sign Up" />
-            <Label layoutX="57.0" layoutY="414.0" text="I have an account" />
-            <Button layoutX="167.0" layoutY="411.0" mnemonicParsing="false" onAction="#switchtologin" text="Login" />
+            <TextField fx:id="nameField" alignment="CENTER" layoutX="118.0" layoutY="214.0" prefHeight="25.0" prefWidth="178.0" promptText="Full Name" />
+            <Label layoutX="41.0" layoutY="267.0" prefHeight="18.0" prefWidth="106.0" text="Password" />
+            <TextField fx:id="PasswordField" layoutX="118.0" layoutY="263.0" prefHeight="25.0" prefWidth="178.0" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="30.0" prefWidth="130.0" text="Sign Up" />
+            <Label layoutX="118.0" layoutY="414.0" text="I have an account" />
+            <Button layoutX="237.0" layoutY="410.0" mnemonicParsing="false" onAction="#switchtologin" text="Login" />
          </children></AnchorPane>
   </items>
 </SplitPane>

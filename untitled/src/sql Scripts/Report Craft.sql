@@ -1,1 +1,1 @@
-show database;
+select * from user_details;
