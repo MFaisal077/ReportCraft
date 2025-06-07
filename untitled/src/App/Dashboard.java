@@ -1,6 +1,10 @@
 package App;
 
+import Database.jdbc;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +17,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+
+import static App.AlertHelper.showAlert;
 
 public class Dashboard extends Application {
 
@@ -26,6 +36,7 @@ public class Dashboard extends Application {
 
         Image icon = new Image("resources/monitor.png"); // Application Icon
         stage.getIcons().add(icon);
+        TableView<ObservableList<String>> resultTable = new TableView<>();
 
 
         Label titleLabel = new Label("Report Craft");
@@ -73,6 +84,45 @@ public class Dashboard extends Application {
         });
 
 
+        runButton.setOnAction(e -> {
+String query = queryInput.getText().trim();
+
+            // Optional: block non-SELECT queries
+            if (!query.toLowerCase().startsWith("select")) {
+                showAlert(Alert.AlertType.WARNING, "Error","ONLY_SELECT_QUERY");
+                return;
+            }
+            try (Connection conn = jdbc.connect();
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)) {
+
+                resultTable.getItems().clear();
+                resultTable.getColumns().clear();
+
+                ResultSetMetaData meta = rs.getMetaData();
+                int columnCount = meta.getColumnCount();
+
+                // Create columns dynamically
+                for (int i = 1; i <= columnCount; i++) {
+                    final int colIndex = i - 1;
+                    TableColumn<ObservableList<String>, String> column = new TableColumn<>(meta.getColumnName(i));
+                    column.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(colIndex)));
+                    resultTable.getColumns().add(column);
+                }
+
+                // Add data rows
+                while (rs.next()) {
+                    ObservableList<String> row = FXCollections.observableArrayList();
+                    for (int i = 1; i <= columnCount; i++) {
+                        row.add(rs.getString(i));
+                    }
+                    resultTable.getItems().add(row);
+                }
+
+            } catch (Exception ex) {
+                showAlert(Alert.AlertType.ERROR, "Query Failed: " + ex.getMessage(),"Exeption");
+            }
+        });
         HBox actionBox = new HBox(10, queryInput,runButton, exportButton, addSQLButton);
         actionBox.setPadding(new Insets(10));
         actionBox.setAlignment(Pos.CENTER_LEFT);
@@ -83,7 +133,7 @@ public class Dashboard extends Application {
         statusBar.setAlignment(Pos.CENTER_LEFT);
 
 
-        VBox layout = new VBox(10, titleBox, actionBox, statusBar);
+        VBox layout = new VBox(10, titleBox, actionBox, statusBar,resultTable);
         layout.setPadding(new Insets(15));
 
 
