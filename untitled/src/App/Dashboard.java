@@ -53,16 +53,18 @@ public class Dashboard extends Application {
         Button runButton = new Button("Run"); // For running the query
         Button exportButton = new Button("Export"); // Exporting the graphs
         Button addSQLButton = new Button("Add SQL");// This allows you to import the database in the SQL format
-
+        Button ImportCSV=new Button("Import CSV");
 
         Label confirmationLabel = new Label(); // confirms if the sql file has been successfully uploaded
         Label statusLabel = new Label();
 
-        //Backend for the "ADD SQL" button.
-        FileChooser fileChooser = new FileChooser();
+        //Opens the file explorer
+        FileChooser fileChooser = new FileChooser(); //.SQL files
         fileChooser.setTitle("Open SQL File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL Files", "*.sql"));
-
+        FileChooser csvChooser=new FileChooser(); // .CSV files
+        csvChooser.setTitle("Open CSV File");
+        csvChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
 
         addSQLButton.setOnAction(e -> {
             File file = fileChooser.showOpenDialog(stage);
@@ -70,22 +72,22 @@ public class Dashboard extends Application {
                 try {
                     String content = Files.readString(file.toPath());
                     queryInput.setText(content);
-                    confirmationLabel.setText("✅ Loaded: " + file.getName());
+                    confirmationLabel.setText(" Loaded: " + file.getName());
                     confirmationLabel.setStyle("-fx-text-fill: green;");
                     statusLabel.setText("Ready");
                 } catch (IOException ex) {
-                    confirmationLabel.setText("❌ Error reading file.");
+                    confirmationLabel.setText("Error reading file.");
                     confirmationLabel.setStyle("-fx-text-fill: red;");
                 }
             } else {
-                confirmationLabel.setText("⚠️ No file selected.");
+                confirmationLabel.setText("No file selected.");
                 confirmationLabel.setStyle("-fx-text-fill: orange;");
             }
         });
 
 
         runButton.setOnAction(e -> {
-String query = queryInput.getText().trim();
+            String query = queryInput.getText().trim();
 
             // Optional: block non-SELECT queries
             if (!query.toLowerCase().startsWith("select")) {
@@ -123,7 +125,52 @@ String query = queryInput.getText().trim();
                 showAlert(Alert.AlertType.ERROR, "Query Failed: " + ex.getMessage(),"Exeption");
             }
         });
-        HBox actionBox = new HBox(10, queryInput,runButton, exportButton, addSQLButton);
+
+        ImportCSV.setOnAction(e -> {
+            File csvFile = csvChooser.showOpenDialog(stage);
+            if (csvFile != null) {
+                resultTable.getItems().clear();
+                resultTable.getColumns().clear();
+
+                try {
+                    String content = Files.readString(csvFile.toPath());
+                    String[] lines = content.split("\n");
+
+                    if (lines.length > 0) {
+                        String[] headers = lines[0].split(",");
+
+                        // Create columns
+                        for (int i = 0; i < headers.length; i++) {
+                            final int colIndex = i;
+                            TableColumn<ObservableList<String>, String> column = new TableColumn<>(headers[i].trim());
+                            column.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(colIndex)));
+                            resultTable.getColumns().add(column);
+                        }
+
+                        // Add rows
+                        for (int i = 1; i < lines.length; i++) {
+                            String[] values = lines[i].split(",");
+                            ObservableList<String> row = FXCollections.observableArrayList();
+                            for (String value : values) {
+                                row.add(value.trim());
+                            }
+                            resultTable.getItems().add(row);
+                        }
+
+                        confirmationLabel.setText("✅ Imported: " + csvFile.getName());
+                        confirmationLabel.setStyle("-fx-text-fill: green;");
+                    }
+
+                } catch (IOException ex) {
+                    showAlert(Alert.AlertType.ERROR, "CSV Read Error: " + ex.getMessage(), "Error");
+                }
+            } else {
+                confirmationLabel.setText("⚠️ No CSV file selected.");
+                confirmationLabel.setStyle("-fx-text-fill: orange;");
+            }
+        });
+
+        HBox actionBox = new HBox(10, queryInput,runButton, exportButton, addSQLButton,ImportCSV);
         actionBox.setPadding(new Insets(10));
         actionBox.setAlignment(Pos.CENTER_LEFT);
 
