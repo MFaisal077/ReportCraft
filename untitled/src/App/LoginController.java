@@ -5,21 +5,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
+import org.mindrot.jbcrypt.BCrypt;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 public class LoginController {
     @FXML private TextField emailField;
-    @FXML private TextField PasswordField;
+    @FXML private  PasswordField PasswordField;
     
     // Email validation pattern
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
