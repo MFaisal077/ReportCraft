@@ -37,35 +37,48 @@ public class LoginController {
         }
 
         try (Connection conn = Database.jdbc.connect()) {
-            String sql = "SELECT * FROM user_details WHERE email = ? AND password_hash = ?";
+            String sql = "SELECT password_hash FROM user_details WHERE email = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
-            stmt.setString(2, password);
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setContentText("Login Successful!");
-                alert.show();
+                String storedHash = rs.getString("password_hash");
 
-                // Launch Dashboard
-                try {
-                    Dashboard dashboard = new Dashboard();
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    dashboard.start(stage);
-                } catch (Exception e) {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setTitle("Error");
-                    errorAlert.setContentText("Failed to load Dashboard");
-                    errorAlert.show();
-                    e.printStackTrace();
+                if (BCrypt.checkpw(password, storedHash)) {
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setContentText("Login Successful!");
+                    alert.show();
+
+                    // Load dashboard
+                    try {
+                        Dashboard dashboard = new Dashboard();
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        dashboard.start(stage);
+                    } catch (Exception e) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Error");
+                        errorAlert.setContentText("Failed to load Dashboard");
+                        errorAlert.show();
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Login Failed");
+                    alert.setContentText("Invalid email or password.");
+                    alert.show();
                 }
+
             } else {
+
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Invalid email or password");
+                alert.setTitle("Login Failed");
+                alert.setContentText("User not found.");
                 alert.show();
             }
 

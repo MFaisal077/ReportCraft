@@ -35,7 +35,7 @@ public class SignUpController {
             String sql = "INSERT INTO user_details (email, full_name, password_hash) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            // 🔐 bcrypt the password
+
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
             stmt.setString(1, email);
